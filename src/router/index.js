@@ -1,23 +1,43 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
+// import HomeView from "../views/HomeView.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  { path: "/", redirect: "/mentors" },
   {
-    path: "/",
+    path: "/mentors",
     name: "home",
-    component: HomeView,
+    component: () => import("../views/Mentors/MentorsList.vue"),
   },
   {
-    path: "/about",
+    path: "/mentors/:id",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    component: () => import("../views/Mentors/MentorDetail.vue"),
+    children: [
+      {
+        path: "/contact",
+        name: "about2",
+        component: () => import("../views/Requests/ContactMentor.vue"),
+      },
+    ],
+  },
+  {
+    path: "/register",
+    name: "about3",
+    component: () => import("../views/Mentors/MentorRegisteration.vue"),
+  },
+  {
+    path: "/requests",
+    name: "about4",
+    component: () => import("../views/Requests/RequestsReceived.vue"),
+  },
+  {
+    path: "/:notFound(.*)",
+    name: "about5",
+
+    component: () => import("../views/NotFound.vue"),
   },
 ];
 
